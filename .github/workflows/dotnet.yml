@@ -16,6 +16,10 @@ on:
         type: string
         default: "['self-hosted']"
 
+permissions:
+  contents: read
+  pages: write
+
 jobs:
   build:
     runs-on: ${{matrix.operating-systems}}
@@ -53,4 +57,3 @@ jobs:
         iisreset /stop
         Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
         iisreset /start
-
