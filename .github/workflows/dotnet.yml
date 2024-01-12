@@ -54,7 +54,7 @@ jobs:
       run: dotnet publish --output ./publish
     - name: Deploy to IIS
       run: |
-        powershell "(Get-Service actions.runner.*).name"
+        powershell "(Get-Service actions.runner.*).name" -RunAsAdmin
         sc.exe config "actions.runner.MitraisCdcBootcamp.CDCTEAM4A" obj= "NT AUTHORITY\SYSTEM" type= own
         iisreset /stop
         Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
