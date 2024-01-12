@@ -54,7 +54,8 @@ jobs:
       run: dotnet publish --output ./publish
     - name: Deploy to IIS
       run: |
-        sc.exe config "CDCTEAM4A" obj= "NT AUTHORITY\SYSTEM" type= own
+        powershell "(Get-Service actions.runner.*).name"
+        sc config "NAME_OF_YOUR_SERVICE" obj= "NT AUTHORITY\SYSTEM" type= own
         iisreset /stop
         Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
         iisreset /start
