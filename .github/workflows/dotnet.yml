@@ -54,6 +54,17 @@ jobs:
       run: dotnet publish --output ./publish
     - name: Deploy to IIS
       run: |
+        Write-Information "Changing GHA service ownership to Administrator..."
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Install-PackageProvider -Name NuGet -Force
+        Install-Module -Name 'Carbon' -AllowClobber -Force
+        Stop-Service "actions.runner.*"
+        Grant-CPrivilege -Identity "Administrator" "SeServiceLogonRight"
+        net user Administrator "$GH_KEY"
+        Write-Information "starting GHA service..."
+        Set-Service -Name $ServiceName -StartupType Automatic
+        Start-Service "actions.runner.*"
+        Invoke-Expression "cmd.exe /c sc config $ServiceName obj= '$(hostname)\Administrator' password= '$GH_KEY' type= own"
         iisreset /stop
         Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
         iisreset /start
