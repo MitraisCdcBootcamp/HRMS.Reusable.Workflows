@@ -51,8 +51,7 @@ jobs:
     #   with:
     #     path: C:\Users\Public\Artifacts
     - name: Publish
-      run: dotnet publish --output C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
-    # - name: Deploy to IIS
+      run: dotnet publish --output C:\CDC Team 4\API\${{inputs.repo-name}}
     #   run: |
     #     powershell "(Get-Service actions.runner.*).name"
     #     sc.exe config "actions.runner.MitraisCdcBootcamp.CDCTEAM4A" obj= "NT AUTHORITY\SYSTEM" type= own
