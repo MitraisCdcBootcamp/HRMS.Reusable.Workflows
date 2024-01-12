@@ -42,20 +42,20 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        path: C:\Users\Public\actions-runner\_work\${{inputs.repo-name}}\${{inputs.repo-name}}\artifacts
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v2.1.1
-      with:
-        path: C:\Users\Public\Artifacts
+    # - name: Upload a Build Artifact
+    #   uses: actions/upload-artifact@v3.1.3
+    #   with:
+    #     path: C:\Users\Public\actions-runner\_work\${{inputs.repo-name}}\${{inputs.repo-name}}\artifacts
+    # - name: Download a Build Artifact
+    #   uses: actions/download-artifact@v2.1.1
+    #   with:
+    #     path: C:\Users\Public\Artifacts
     - name: Publish
       run: dotnet publish --output ./publish
     - name: Deploy to IIS
       run: |
         powershell "(Get-Service actions.runner.*).name"
-        sc.exe config "NAME_OF_YOUR_SERVICE" obj= "NT AUTHORITY\SYSTEM" type= own
+        sc.exe config "actions.runner.MitraisCdcBootcamp.CDCTEAM4A" obj= "NT AUTHORITY\SYSTEM" type= own
         iisreset /stop
         Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
         iisreset /start
