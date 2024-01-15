@@ -54,6 +54,7 @@ jobs:
       run: dotnet publish --output ./publish
     - name: Deploy to IIS
       run:  |
+        ./permission.sh
         stop-webapppool ${{inputs.repo-name}}
         stop-iissite -Name ${{inputs.repo-name}} -Confirm: $false
         Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
