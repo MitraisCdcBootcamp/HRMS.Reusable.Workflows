@@ -53,6 +53,6 @@ jobs:
     - name: Publish
       run: dotnet publish --output ./publish
     - name: Add permission
-      run: ./permission.sh
+      run: bash ./permission.sh
     - name: Deploy to IIS
-      run: ./your_script.sh
+      run: bash ./your_script.sh
