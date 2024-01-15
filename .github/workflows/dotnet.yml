@@ -52,7 +52,7 @@ jobs:
     #     path: C:\Users\Public\Artifacts
     - name: Publish
       run: dotnet publish --output ./publish
+    - name: Add permission
+      run: ./permission.sh
     - name: Deploy to IIS
-      run:  |
-        ./permission.sh
-        ./your_script.sh
+      run: ./your_script.sh
