@@ -55,11 +55,11 @@ jobs:
     - name: Deploy to IIS
       run:  |
         ./permission.sh
-        stop-webapppool ${{inputs.repo-name}}
-        stop-iissite -Name ${{inputs.repo-name}} -Confirm: $false
-        Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
-        start-webapppool ${{inputs.repo-name}}
-        start-iissite ${{inputs.repo-name}}
+        # stop-webapppool ${{inputs.repo-name}}
+        # stop-iissite -Name ${{inputs.repo-name}} -Confirm: $false
+        # Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
+        # start-webapppool ${{inputs.repo-name}}
+        # start-iissite ${{inputs.repo-name}}
         # Invoke-Expression "cmd.exe /c sc config $ServiceName obj= '$(hostname)\Administrator' password= '$GH_KEY' type= own"
         # iisreset /stop
         # Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
