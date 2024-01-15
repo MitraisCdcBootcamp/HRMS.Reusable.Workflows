@@ -17,8 +17,16 @@ on:
         default: "['self-hosted']"
 
 permissions:
-  contents: read
-  pages: write
+  actions: write
+  checks: write
+  contents: write
+  deployments: write
+  issues: write
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
 
 jobs:
   build:
@@ -55,5 +63,5 @@ jobs:
     - name: Deploy to IIS
       run: |
         iisreset /stop
-      # Copy-Item ./publish/* C:\CDC Team 4\API\${{inputs.repo-name}} -Recurse -Force
-      # iisreset /start
+        Copy-Item ./publish/* "C:\CDC Team 4\API\${{inputs.repo-name}}" -Recurse -Force
+        iisreset /start
