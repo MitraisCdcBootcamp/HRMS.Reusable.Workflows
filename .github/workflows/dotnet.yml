@@ -53,6 +53,6 @@ jobs:
     - name: Publish
       run: dotnet publish --output ./publish
     - name: Add permission
-      run: bash ./permission.sh
+      run: git update-index --chmod=+x your_script.sh
     - name: Deploy to IIS
-      run: bash ./your_script.sh
+      run: ./your_script.sh
