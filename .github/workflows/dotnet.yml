@@ -60,11 +60,6 @@ jobs:
     #     path: C:\Users\Public\Artifacts
     - name: Publish
       run: dotnet publish --output ./publish
-    - name: Admin privilege
-      run: |
-        whoami
-        $SERVICE_NAME = powershell "(Get-Service actions.runner.*).name"
-        sc.exe config "$SERVICE_NAME" obj= "NT AUTHORITY\SYSTEM" type= own
     - name: Deploy to IIS
       run: |
         iisreset /stop
