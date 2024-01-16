@@ -1,0 +1,40 @@
+# This reusable workflow can be called from .NET repository to deploy published folder to IIS.
+
+name: Deploy PR
+
+on:
+  workflow_call:
+    inputs:
+      repo-name:
+        description: "Name of the repository"
+        required: true
+        type: string
+        default: "HRMS.Api"
+      publish-folder:
+        description: "Folder to publish"
+        required: true
+        type: string
+        default: "./publish"
+
+permissions:
+  actions: write
+  checks: write
+  contents: write
+  deployments: write
+  issues: write
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
+jobs:
+  build:
+    runs-on: ${{matrix.operating-systems}}
+
+    steps:
+    - name: Deploy to IIS
+      run: |
+        iisreset /stop
+        Copy-Item ${{inputs.publish-folder}}/* "C:\CDC Team 4\API\${{inputs.repo-name}}" -Recurse -Force
+        iisreset /start
