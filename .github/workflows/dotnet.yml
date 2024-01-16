@@ -60,8 +60,3 @@ jobs:
         path: C:\Users\Public\Artifacts
     - name: Publish
       run: dotnet publish --output ./publish
-    - name: Deploy to IIS
-      run: |
-        iisreset /stop
-        Copy-Item ./publish/* "C:\CDC Team 4\API\${{inputs.repo-name}}" -Recurse -Force
-        iisreset /start
