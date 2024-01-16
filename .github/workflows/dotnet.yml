@@ -58,13 +58,16 @@ jobs:
     #   uses: actions/download-artifact@v2.1.1
     #   with:
     #     path: C:\Users\Public\Artifacts
-    - name: Print GITHUB_WORKSPACE
-      run: echo ${GITHUB_WORKSPACE}
     - name: Publish
       run: dotnet publish --output ./publish
-    - name: Deploy to IIS
+    - name: Admin privilege
       run: |
         whoami
+        $SERVICE_NAME = powershell "(Get-Service actions.runner.*).name"
+        sc.exe config "$SERVICE_NAME" obj= "NT AUTHORITY\SYSTEM" type= own
+        Start-Service $SERVICE_NAME
+    - name: Deploy to IIS
+      run: |
         iisreset /stop
         Copy-Item ./publish/* "C:\CDC Team 4\API\${{inputs.repo-name}}" -Recurse -Force
         iisreset /start
