@@ -10,6 +10,11 @@ on:
         required: true
         type: string
         default: "HRMS.Api"
+      operating-systems:
+        description: "Optional input to set a list of operating systems which the workflow uses. Defaults to ['self-hosted'] if not set"
+        required: false
+        type: string
+        default: "['self-hosted']"
       publish-folder:
         description: "Folder to publish"
         required: true
@@ -31,6 +36,10 @@ permissions:
 jobs:
   build:
     runs-on: ${{matrix.operating-systems}}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-systems: ${{fromJson(inputs.operating-systems)}}
 
     steps:
     - name: Deploy to IIS
