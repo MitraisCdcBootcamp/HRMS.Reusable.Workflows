@@ -58,5 +58,3 @@ jobs:
       uses: actions/download-artifact@v2.1.1
       with:
         path: C:\Users\Public\Artifacts
-    - name: Publish
-      run: dotnet publish --output ./publish
