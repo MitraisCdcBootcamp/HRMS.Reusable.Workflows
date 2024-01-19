@@ -42,8 +42,11 @@ jobs:
         operating-systems: ${{fromJson(inputs.operating-systems)}}
 
     steps:
-    - name: Deploy to IIS
-      run: |
-        iisreset /stop
-        Copy-Item ${{inputs.publish-folder}}/* "C:\CDC Team 4\API\${{inputs.repo-name}}" -Recurse -Force
-        iisreset /start
+      - name: Turn off IIS
+        id: iis-stop
+        run: iisreset /stop
+      - name: Copy publish files
+        run: opy-Item ${{inputs.publish-folder}}/* "C:\CDC Team 4\API\${{inputs.repo-name}}" -Recurse -Force
+      - name: Turn on IIS
+        if: steps.iis-stop.outcome == 'success'
+        run: iisreset /start
