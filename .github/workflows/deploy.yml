@@ -48,5 +48,5 @@ jobs:
       - name: Copy publish files
         run: opy-Item ${{inputs.publish-folder}}/* "C:\CDC Team 4\API\${{inputs.repo-name}}" -Recurse -Force
       - name: Turn on IIS
-        if: steps.iis-stop.outcome == 'success'
+        if: always()
         run: iisreset /start
