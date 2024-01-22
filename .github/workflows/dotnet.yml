@@ -15,11 +15,6 @@ on:
         required: false
         type: string
         default: "['self-hosted']"
-      sonar-token:
-        description: "Token for SonarQube"
-        required: true
-        type: string
-
 permissions:
   actions: write
   checks: write
@@ -78,8 +73,8 @@ jobs:
     - name: Build and analyze
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"Human-Resource-Management-System---Backend" /d:sonar.token="${{inputs.sonar-token}}" /d:sonar.host.url="https://sonarqube.mitrais-dev.com"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"Human-Resource-Management-System---Backend" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarqube.mitrais-dev.com"
         dotnet build
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{inputs.sonar-token}}"
+        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
     - name: Test
       run: dotnet test --no-build --verbosity normal
