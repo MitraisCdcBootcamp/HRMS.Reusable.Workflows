@@ -15,6 +15,10 @@ on:
         required: false
         type: string
         default: "['self-hosted']"
+      sonar-token:
+        description: "Token for SonarQube"
+        required: true
+        type: string
 
 permissions:
   actions: write
@@ -65,27 +69,17 @@ jobs:
       run: |
         New-Item -Path .\.sonar\scanner -ItemType Directory
         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-    - name: Build and analyze
-      shell: powershell
-      run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"Human-Resource-Management-System---Backend" /d:sonar.token="sqp_eff2ce09402d4fd3576ff15a707a7e16182326b4" /d:sonar.host.url="https://sonarqube.mitrais-dev.com"
-        dotnet build
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+    - name: Build and analyze
+      shell: powershell
+      run: |
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"Human-Resource-Management-System---Backend" /d:sonar.token="${{inputs.sonar-token}}" /d:sonar.host.url="https://sonarqube.mitrais-dev.com"
+        dotnet build
+        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{inputs.sonar-token}}"
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        path: ./artifacts
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v2.1.1
-      with:
-        path: C:\Users\Public\Artifacts
