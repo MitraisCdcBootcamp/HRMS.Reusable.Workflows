@@ -68,7 +68,7 @@ jobs:
     - name: Build and analyze
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"Human-Resource-Management-System---Backend" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"Human-Resource-Management-System---Backend" /d:sonar.token="sqp_eff2ce09402d4fd3576ff15a707a7e16182326b4" /d:sonar.host.url="https://sonarqube.mitrais-dev.com"
         dotnet build
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
     - name: Setup .NET
