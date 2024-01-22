@@ -15,6 +15,11 @@ on:
         required: false
         type: string
         default: "['self-hosted']"
+    secrets:
+      SONAR_TOKEN:
+        description: 'Token for SonarQube'
+        required: true
+
 permissions:
   actions: write
   checks: write
@@ -36,7 +41,7 @@ jobs:
         operating-systems: ${{fromJson(inputs.operating-systems)}}
     env:
       DOTNET_INSTALL_DIR: "./.dotnet"
-
+      
     steps:
     - uses: actions/checkout@v3
       with:
