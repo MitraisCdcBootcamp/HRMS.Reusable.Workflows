@@ -15,6 +15,10 @@ on:
         required: false
         type: string
         default: "['self-hosted']"
+      project-key:
+        description: "SonarQube project key"
+        required: true
+        type: string
     secrets:
       SONAR_TOKEN:
         description: 'Token for SonarQube'
@@ -79,7 +83,7 @@ jobs:
     - name: Build and analyze
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"Human-Resource-Management-System---Backend" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarqube.mitrais-dev.com"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.project-key }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarqube.mitrais-dev.com"
         dotnet build
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
     - name: Test
