@@ -80,11 +80,14 @@ jobs:
         dotnet-version: 8.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Install dotnet coverage
+      run: dotnet tool install --global dotnet-coverage
     - name: Build and analyze
       shell: powershell
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.project-key }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarqube.mitrais-dev.com"
         dotnet build
+        dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
     - name: Test
       run: dotnet test --no-build --verbosity normal
