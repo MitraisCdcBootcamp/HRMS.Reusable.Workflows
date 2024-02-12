@@ -81,7 +81,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Install dotnet coverage
-      run: dotnet tool install --global dotnet-coverage
+      run: dotnet tool update --global dotnet-coverage
     - name: Build and analyze
       shell: powershell
       run: |
