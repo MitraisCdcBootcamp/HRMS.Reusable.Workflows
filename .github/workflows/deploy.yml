@@ -48,7 +48,7 @@ jobs:
 
     steps:
       - name: Publish
-        run: dotnet publish --output ./publish
+        run: dotnet publish --output ${{inputs.publish-folder}}
       - name: Turn off IIS
         run: iisreset /stop
       - name: Copy publish files
