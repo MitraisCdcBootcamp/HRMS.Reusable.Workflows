@@ -24,7 +24,7 @@ on:
         description: "Deployment destination folder"
         required: true
         type: string
-        default: "C:\CDC Team 4"
+        default: "C:\\CDC Team 4"
 
 permissions:
   actions: write
