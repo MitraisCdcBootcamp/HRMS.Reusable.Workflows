@@ -49,10 +49,10 @@ jobs:
     steps:
       - name: Publish
         run: dotnet publish --output ${{inputs.publish-folder}}
-      - name: Turn off IIS
-        run: iisreset /stop
+      - name: Stop IIS site
+        run: Stop-IISSite "${{inputs.repo-name}}"
       - name: Copy publish files
         run: Copy-Item ${{inputs.publish-folder}}/* "${{inputs.deploy-folder}}\API\${{inputs.repo-name}}" -Recurse -Force
-      - name: Turn on IIS
+      - name: Start IIS site
         if: always()
-        run: iisreset /start
+        run: Start-IISSite "${{inputs.repo-name}}"
