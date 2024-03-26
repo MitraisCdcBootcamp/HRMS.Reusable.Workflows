@@ -39,7 +39,7 @@ permissions:
   statuses: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ${{matrix.operating-systems}}
     strategy:
       fail-fast: false
@@ -52,7 +52,7 @@ jobs:
       - name: Turn off IIS
         run: iisreset /stop
       - name: Copy publish files
-        run: robocopy ${{inputs.publish-folder}}/ "${{inputs.deploy-folder}}\API\${{inputs.repo-name}}" /E /XO /V
+        run: Copy-Item ${{inputs.publish-folder}}/* "${{inputs.deploy-folder}}\API\${{inputs.repo-name}}" -Recurse -Force
       - name: Turn on IIS
         if: always()
         run: iisreset /start
