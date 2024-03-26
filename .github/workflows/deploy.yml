@@ -53,7 +53,7 @@ jobs:
         run: iisreset /stop
       - name: Copy publish files
         shell: pwsh
-        run: Robocopy ${{inputs.publish-folder}}/ "${{inputs.deploy-folder}}\API\${{inputs.repo-name}}" /MIR
+        run: robocopy ${{inputs.publish-folder}}/ "${{inputs.deploy-folder}}\API\${{inputs.repo-name}}" /MIR
       - name: Turn on IIS
         if: always()
         run: iisreset /start
