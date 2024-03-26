@@ -52,7 +52,7 @@ jobs:
       - name: Turn off IIS
         run: iisreset /stop
       - name: Copy publish files
-        run: robocopy ${{inputs.publish-folder}}/ "${{inputs.deploy-folder}}\API\${{inputs.repo-name}}" /MIR
+        run: robocopy ${{inputs.publish-folder}}/ "${{inputs.deploy-folder}}\API\${{inputs.repo-name}}" /E /XO /V
       - name: Turn on IIS
         if: always()
         run: iisreset /start
